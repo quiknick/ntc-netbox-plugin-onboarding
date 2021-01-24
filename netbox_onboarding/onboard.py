@@ -35,6 +35,14 @@ class OnboardingTaskManager:
         return None
 
     @property
+    def optional_args(self):
+        """Return platform optional args."""
+        if self.ot.platform and self.ot.platform.napalm_args:
+            return self.ot.platform.napalm_args
+
+        return {}
+
+    @property
     def ip_address(self):
         """Return ot's ip address."""
         return self.ot.ip_address
@@ -75,12 +83,12 @@ class OnboardingManager:
 
     def __init__(self, ot, username, password, secret):
         """Inits class."""
-        self.username = username
-        self.password = password
-        self.secret = secret
-
         # Create instance of Onboarding Task Manager class:
         otm = OnboardingTaskManager(ot)
+
+        self.username = username or settings.NAPALM_USERNAME
+        self.password = password or settings.NAPALM_PASSWORD
+        self.secret = secret or otm.optional_args.get("secret", None) or settings.NAPALM_ARGS.get("secret", None)
 
         netdev = NetdevKeeper(
             hostname=otm.ip_address,
@@ -90,6 +98,7 @@ class OnboardingManager:
             password=self.password,
             secret=self.secret,
             napalm_driver=otm.napalm_driver,
+            optional_args=otm.optional_args or settings.NAPALM_ARGS,
         )
 
         netdev.get_onboarding_facts()
@@ -116,6 +125,7 @@ class OnboardingManager:
         }
 
         onboarding_cls = netdev_dict["onboarding_class"]()
+        onboarding_cls.credentials = {"username": self.username, "password": self.password, "secret": self.secret}
         onboarding_cls.run(onboarding_kwargs=onboarding_kwargs)
 
         self.created_device = onboarding_cls.created_device
