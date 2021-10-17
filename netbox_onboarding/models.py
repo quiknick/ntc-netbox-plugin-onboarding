@@ -17,7 +17,7 @@ from django.db import models
 from django.urls import reverse
 from dcim.models import Device
 from .choices import OnboardingStatusChoices, OnboardingFailChoices
-from .release import NETBOX_RELEASE_CURRENT, NETBOX_RELEASE_29
+from .release import NETBOX_RELEASE_CURRENT, NETBOX_RELEASE_29, NETBOX_RELEASE_211
 
 # Support NetBox 2.8
 if NETBOX_RELEASE_CURRENT < NETBOX_RELEASE_29:
