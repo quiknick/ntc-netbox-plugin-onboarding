@@ -17,11 +17,11 @@ from django.db.models import Q
 
 from dcim.models import Site, DeviceRole, Platform
 
-from .release import NETBOX_RELEASE_CURRENT, NETBOX_RELEASE_211
+from .release import NETBOX_RELEASE_CURRENT, NETBOX_RELEASE_30
 from .models import OnboardingTask
 
 
-if NETBOX_RELEASE_CURRENT < NETBOX_RELEASE_211:
+if NETBOX_RELEASE_CURRENT < NETBOX_RELEASE_30:
     from utilities.filters import NameSlugSearchFilterSet  # pylint: disable=no-name-in-module, import-error
 
     class FitersetMixin(NameSlugSearchFilterSet):
