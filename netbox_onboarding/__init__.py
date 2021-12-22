@@ -12,7 +12,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-__version__ = "2.2.1b1"
+__version__ = "2.2.1b2"
 
 from extras.plugins import PluginConfig
 
