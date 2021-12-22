@@ -25,7 +25,7 @@ if NETBOX_RELEASE_CURRENT < NETBOX_RELEASE_29:
 # Support NetBox 2.9, NetBox 2.10
 elif NETBOX_RELEASE_CURRENT < NETBOX_RELEASE_211:
     from extras.models import ChangeLoggedModel  # pylint: disable=no-name-in-module, import-error
-# Support NetBox 2.11 and 3.0
+# Support NetBox 2.11 and 3.1
 else:
     from netbox.models import ChangeLoggedModel  # pylint: disable=no-name-in-module, import-error
 
